@@ -82,8 +82,8 @@ function add (a, b) {
     return a + b;
 }
 
-// substract function
-function substract (a, b) {
+// subtract function
+function subtract (a, b) {
     return a - b;
 }
 
@@ -108,8 +108,8 @@ function operate(numb1, numb2, operat) {
     if (operat === "add") {
         result = add(numb1, numb2);
     }
-    if (operat === "substract") {
-        result = substract(numb1, numb2);
+    if (operat === "subtract") {
+        result = subtract(numb1, numb2);
     }
     if (operat === "multiply") {
         result = multiply(numb1, numb2);
