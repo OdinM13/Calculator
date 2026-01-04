@@ -4,19 +4,27 @@ let secondNumber = null;
 let helpingNumber = "";
 let firstOperator = "";
 let secondOperator = "";
+let result = 0;
 
 const display = document.querySelector("#display > p");
 let numbers = document.querySelectorAll("#numbers > button");
-console.log(numbers);
 let operators = document.querySelectorAll("#operators > button");
-console.log(operators);
+const clear = document.querySelector("#clear");
+const equal = document.querySelector("#equal");
 
+clear.addEventListener("click", () => clearAC());
+
+equal.addEventListener("click", () => {
+    checkNumbers();
+    operate(firstNumber, secondNumber, firstOperator);
+});
 
 numbers.forEach(number => {
     number.addEventListener("click", () => {
         const selectedId = number.id 
         numberClick(selectedId);
-        console.log(helpingNumber);
+        keystrokes(helpingNumber);
+        // console.log("Helping Number: ", helpingNumber);
     });
 });
 
@@ -24,10 +32,10 @@ operators.forEach(opera => {
     opera.addEventListener("click", () => {
         const selectedId = opera.id 
         operatorClick(selectedId);
-        console.log(firstNumber);
-        console.log(secondNumber);
-        console.log(firstOperator);
-        console.log(secondOperator);
+        // console.log("FirstNumber: ", firstNumber);
+        // console.log("SecondNumber: ", secondNumber);
+        // console.log("FirstOperator: ", firstOperator);
+        // console.log("SecondOperator: ", secondOperator);
     });
 });
 
@@ -41,19 +49,32 @@ function operatorClick (id) {
     } else {
         secondOperator = id;
     }
-    if (firstNumber === null) {
-        firstNumber = Number(helpingNumber); 
-        helpingNumber = "";
-        // return firstNumber;
-    } else if (secondNumber === null) {
-        secondNumber = Number(helpingNumber);
-        helpingNumber = "";
+    checkNumbers();
+    if (firstNumber !== null && secondNumber !== null) {
         operate(firstNumber, secondNumber, firstOperator);
-        // return secondNumber;
-    } 
-    // else {
-    //     operate(firstNumber, secondNumber, firstOperator);
-    // }
+    }
+}
+
+function checkNumbers() {
+    if (helpingNumber !== ""){
+        if (firstNumber === null) {
+            firstNumber = Number(helpingNumber); 
+            helpingNumber = "";
+            // return firstNumber;
+        } else if (secondNumber === null) {
+            secondNumber = Number(helpingNumber);
+            helpingNumber = "";
+        }
+    }
+}
+
+function clearAC() {
+    firstNumber = null;
+    secondNumber = null;
+    helpingNumber = "";
+    firstOperator = "";
+    secondOperator = "";
+    display.innerText = "";
 }
 
 // add function
@@ -77,7 +98,13 @@ function divide (a, b) {
 
 // operate function
 function operate(numb1, numb2, operat) {
-    let result = 0;
+    // console.log("FirstOperator before Operate: ", firstOperator);
+    // console.log("SecondOperator before Operate: ", secondOperator);
+    // console.log("FirstNumber before Operate: ", firstNumber);
+    // console.log("SecondNumber before Operate: ", secondNumber);
+    if (firstOperator === "") {
+        return result;
+    }
     if (operat === "add") {
         result = add(numb1, numb2);
     }
@@ -94,8 +121,15 @@ function operate(numb1, numb2, operat) {
     firstOperator = secondOperator;
     secondOperator = "";
     secondNumber = null;
-    console.log(result);
+    // console.log("result: ", result);
+    // console.log("FirstOperator after Operate: ", firstOperator);
+    // console.log("SecondOperator after Operate: ", secondOperator);
+    // console.log("FirstNumber after Operate: ", firstNumber);
+    // console.log("SecondNumber after Operate: ", secondNumber);
     display.innerText = result;
 };
 
 // Function for display KeyStrokes
+function keystrokes(input){
+    display.innerText = input;
+}
