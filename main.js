@@ -93,6 +93,10 @@ function multiply (a, b) {
 }
 // divide function
 function divide (a, b) {
+    if (b === 0) {
+        display.innerText = "ERROR";
+        clearAC();
+    }
     return a / b;
 }
 
